@@ -78,4 +78,25 @@ function updateUserPassword($password, $id) {
     return "UPDATED";
 }
 
+function getAllGadget() {
+    $db = db();
+    $sql = "SELECT * FROM gadgets";
+    $cmd = $db->prepare($sql);
+    $cmd->execute();
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
+function updateProfileImage($profile, $id) {
+    $db = db();
+    $sql = "UPDATE users SET pro_pic = ? WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($profile, $id));
+    $db = null;
+
+    return "UPDATED";
+}
+
 ?>

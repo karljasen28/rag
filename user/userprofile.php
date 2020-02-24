@@ -30,7 +30,7 @@ session_start();
         <a class="nav-link active" href="userprofile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#signout">Signout</a>
+        <a class="nav-link" href="../signout.php">Signout</a>
       </li>
     </ul>
   </div>
@@ -46,9 +46,9 @@ session_start();
         ?> 
         <div class="row">
             <div class="col">
-                <img class="rounded rounded-circle" src="../assets/images/profile.jpg" alt="profile" width="130" height="100">
+                <img class="rounded rounded-circle" src="../assets/images/<?php echo $data['pro_pic']?>" alt="profile" width="130" height="100">
                 <h5><?php echo $data['fname']; echo $data['lname'] ?></h5>
-                <a class="text-primary" href="editprofilepic">Change Photo</a>
+                <a class="text-primary" href="editprofilepic.php?id=<?php echo $data['id']?>">Change Photo</a>
             </div>
         </div>
         <div class="form-inline pt-5">

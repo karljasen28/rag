@@ -2,21 +2,19 @@
 require('../dbuser/functiondb.php');
 session_start();
 
-$id = $_SESSION['id'];
+if(isset($_POST['save'])) {
+    $profile = $_POST['profile'];
+    $id = $_GET['id'];
 
-if(isset($_POST['update'])) {
-    $gender = $_POST['gender'];
-    $address = $_POST['address'];
-    $contactno = $_POST['contactno'];
+    $output = updateProfileImage($profile, $id);  
 
-    $output = updateUserInfo($gender, $address, $contactno, $id);
-
-    if($output === "UPDATED") {
+    if(empty($profile)) {
+        $error = "Please choose image";
+    } else if($output === "UPDATED") {
         header("location: userprofile.php");
-    } else {
-        $message = "Failed to Update";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +22,7 @@ if(isset($_POST['update'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Change Profile</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
@@ -54,30 +52,18 @@ if(isset($_POST['update'])) {
 </nav>
 <main>
     <div class="container bg-light py-5">
-        <h3>Update Information</h3>
+        <h3>Choose Profile Picture</h3>
         <hr>
     <form class="form-horizontal" method="POST">
-        <?php foreach(getUserUpdate($_SESSION['id']) as $data) { ?>
+        <img class="img-fluid" id="image" src="#" alt="Profile image" width="150">
+        <br><br>
         <div class="form-group">
-            <label>Gender</label>
-            <select class="form-control" name="gender">
-                <option hidden>Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
+            <label for="">Choose file</label>
+            <input class="form-control" type="file" name="profile" id="imgchoosen">
         </div>
         <div class="form-group">
-            <label>Address</label>
-            <input class="form-control" type="text" name="address" placeholder="Address" value="<?php echo $data['address']?>">
+            <input class="btn btn-primary" type="submit" name="save" value="Update Profile">
         </div>
-        <div class="form-group">
-            <label>Phone No.</label>
-            <input class="form-control" type="text" name="contactno" placeholder="Contact Number" value="<?php echo $data['contactno']?>">
-        </div>
-        <div class="form-group">
-            <input class="btn btn-primary col-lg-3" type="submit" name="update" value="SAVE">
-        </div>
-        <?php } ?>
     </form>
     </div>
 </main>
@@ -90,5 +76,22 @@ if(isset($_POST['update'])) {
 <script type="text/javascript" src="../assets/js/bootstrap.js.map"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js.map"></script>
+<script>
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#image').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#imgchoosen").change(function(){
+    readURL(this);
+});
+</script>
 </body>
 </html>
