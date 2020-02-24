@@ -21,15 +21,8 @@
       <li class="nav-item">
         <a class="nav-link" href="login.php">Login</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Register As
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="user-register.php">User Account</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="owner-register.php">Owner Account</a>
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="register.php">Register</a>
       </li>
     </ul>
   </div>
@@ -38,10 +31,6 @@
 <body>
     <main>
         <div class="container col-lg-5 bg-light px-5 py-5">
-        	<div class="row">
-        		<div class="col text-center"><a class="" href="login-user.php">Login as user</a></div>
-        		<div class="col text-center"><a href="login-owner.php">Login as Owner</a></div>
-        	</div>
         	<form class="form-horizonta py-5" method="POST" action="">
         		<div class="form-group">
         			<label>Email</label>
