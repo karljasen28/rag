@@ -28,7 +28,7 @@
             <a class="nav-link" href="devices.php">My Devices</a>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="userprofile.php">Profile</a>
+            <a class="nav-link" href="owner_profile.php">Profile</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" href="../signout.php">Signout</a>
