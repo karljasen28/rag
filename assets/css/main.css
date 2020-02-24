@@ -1,5 +1,6 @@
 body{
 	background-color: #f1f1f1;
+	font-family: 'Roboto', sans-serif;
 }
 
 main{
@@ -11,4 +12,8 @@ main{
 .bg-white{
 	background-color: #ffffff;
 	cursor: pointer;
+}
+
+hr{
+	border: 1px solid #cccccc;
 }
