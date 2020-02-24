@@ -14,4 +14,37 @@ function registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $em
     return "Registration Success";
 }
 
+function getUserProfile($fetch_id) {
+    // session_start();
+    $db = db();
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($fetch_id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
+function getUserUpdate($id) {
+    $db = db();
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
+function updateUserInfo($gender, $address, $contactno, $id) {
+    $db = db();
+    $sql = "UPDATE users SET gender = ?, address = ?, contactno = ? WHERE id = ?"; 
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($gender, $address, $contactno, $id));
+    $db = null;
+
+    return "UPDATED";
+}
+
 ?>

@@ -1,9 +1,30 @@
+<?php 
+require('../dbuser/functiondb.php');
+session_start();
+
+$id = $_SESSION['id'];
+
+if(isset($_POST['update'])) {
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $contactno = $_POST['contactno'];
+
+    $output = updateUserInfo($gender, $address, $contactno, $id);
+
+    if($output === "UPDATED") {
+        header("location: userprofile.php");
+    } else {
+        $message = "Failed to Update";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
@@ -19,10 +40,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link active" href="login.php">Home</a>
+        <a class="nav-link" href="login.php">Home</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="userprofile.php">Profile</a>
+        <a class="nav-link active" href="userprofile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="#signout">Signout</a>
@@ -31,25 +52,35 @@
   </div>
 </div>
 </nav>
-
 <main>
-  <div class="container-fluid ml-auto">
-    <div class="row" style="padding-left: 150px;">
-      <div class="col-lg-2 bg-white py-3 mt-4 mr-3">
-          <div class="text-center pb-3">
-            <img class="img-fluid text-center" src="../assets/images/oppo.jpg" alt="oppo" width="150">
-          </div>
-          <p>OPPO A5 2020</p>
-          <p>Dazzling White, 4GB RAM, 64GB Storage</p>
-          <h6 class="text-success">₱12,690.00</h6>
-            <a class="btn btn-primary col mt-3" href="view.php">View</a>
-      </div>
+    <div class="container bg-light py-5">
+        <h3>Update Information</h3>
+        <hr>
+    <form class="form-horizontal" method="POST">
+        <?php foreach(getUserUpdate($_SESSION['id']) as $data) { ?>
+        <div class="form-group">
+            <label>Gender</label>
+            <select class="form-control" name="gender">
+                <option hidden>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input class="form-control" type="text" name="address" placeholder="Address" value="<?php echo $data['address']?>">
+        </div>
+        <div class="form-group">
+            <label>Phone No.</label>
+            <input class="form-control" type="text" name="contactno" placeholder="Contact Number" value="<?php echo $data['contactno']?>">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary col-lg-3" type="submit" name="update" value="SAVE">
+        </div>
+        <?php } ?>
+    </form>
     </div>
-  </div>
 </main>
-
-
-
 <script type="text/javascript" src="../assets/js/jquery.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.bundle.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.bundle.js.map"></script>
