@@ -1,19 +1,38 @@
 <?php
-
+  session_start();
   if (isset($_POST['btnLogin'])) {
     $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    echo $email;
-    echo $password;
+    $password = md5($_POST['password']);
 
     require 'dbowner/db.php';
     $sql = "SELECT * FROM users WHERE email = '$email' && password = '$password'";
     $result = mysqli_query($con, $sql);
     $rows = mysqli_num_rows($result);
+    while ($data = mysqli_fetch_assoc($result)) {
+      $id = $data['id'];
+      $type = $data['type'];
+      $status = $data['status'];
+    }
 
     if ($rows > 0) {
-      echo "<script>alert('Successfully logged in!')</script>";
+      if ($type == 'user') {
+        if ($status == 'active') {
+          $_SESSION['id'] = $id;
+          echo "<script>alert('Logged in as user');window.location='user/userdashboard.php'</script>";
+        }
+        else{
+          echo "<script>alert('User inactive');window.location='login.php'</script>";
+        }
+      }
+      else if ($type == 'owner') {
+        if ($status == 'active') {
+          $_SESSION['id'] = $id;
+          echo "<script>alert('Logged in as owner');window.location='owner/ownerdashboard.php'</script>";
+        }
+        else{
+          echo "<script>alert('User inactive');window.location='login.php'</script>";
+        }
+      }
     }
     else{
        echo "<script>alert('Incorrect Credentials')</script>";
