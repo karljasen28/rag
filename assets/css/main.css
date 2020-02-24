@@ -7,3 +7,8 @@ main{
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.bg-white{
+	background-color: #ffffff;
+	cursor: pointer;
+}
