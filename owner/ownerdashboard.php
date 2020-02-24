@@ -6,6 +6,12 @@
     $sql = "SELECT * FROM gadgets WHERE owner_id =".$id;
     $result = mysqli_query($con, $sql);
     $rows = mysqli_num_rows($result);
+
+    $sql1 = "SELECT * FROM users WHERE id=".$id;
+    $result1 = mysqli_query($con, $sql1);
+    while ($data = mysqli_fetch_assoc($result1)) {
+        $pro_pic = $data['pro_pic'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +23,7 @@
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
 </head>
-<body>
+<body style="transition: 0.5s">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container">
   <a class="navbar-brand" href="ownerdashboard.php"><img src="../assets/images/logo.png" alt="" width="100"></a>
@@ -37,7 +43,7 @@
         <a class="nav-link" href="devices.php">My Devices</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="userprofile.php">Profile</a>
+        <a class="nav-link" href="owner_profile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="../signout.php">Signout</a>
@@ -49,6 +55,19 @@
 
 <main>
 
+    <?php
+        if (!$pro_pic) {
+           echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert'>
+            <strong>Warning!</strong> Change your profile picture for security purposes. <a href='' class='btn btn-warning btn-sm text-white'>Change Profile Picture</a>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+            </div>";
+        }
+        else {
+            echo "";
+        }
+    ?>
     <div class="container">
         <div class="row">
             <div class="col m-auto">
