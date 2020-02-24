@@ -43,7 +43,7 @@ if(isset($_POST['update'])) {
         <a class="nav-link active" href="userprofile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#signout">Signout</a>
+        <a class="nav-link" href="../signout.php">Signout</a>
       </li>
     </ul>
   </div>

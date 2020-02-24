@@ -20,7 +20,7 @@ if(isset($_POST['update'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Email/title>
+    <title>Update Email</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
@@ -42,7 +42,7 @@ if(isset($_POST['update'])) {
         <a class="nav-link active" href="userprofile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#signout">Signout</a>
+        <a class="nav-link" href="../signout.php">Signout</a>
       </li>
     </ul>
   </div>

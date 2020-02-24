@@ -1,4 +1,5 @@
 <?php
+require('../dbuser/functiondb.php');
 session_start();
 ?>
 <!DOCTYPE html>
@@ -25,10 +26,13 @@ session_start();
         <a class="nav-link active" href="userdashboard.php">Home</a>
       </li>
       <li class="nav-item dropdown">
+        <a class="nav-link" href="transaction.php">Transaction</a>
+      </li>
+      <li class="nav-item dropdown">
         <a class="nav-link" href="userprofile.php">Profile</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="#signout">Signout</a>
+        <a class="nav-link" href="../signout.php">Signout</a>
       </li>
     </ul>
   </div>
@@ -38,15 +42,17 @@ session_start();
 <main>
   <div class="container-fluid ml-auto">
     <div class="row" style="padding-left: 150px;">
+    <?php foreach(getAllGadget() as $data) { ?>
       <div class="col-lg-2 bg-white py-3 mt-4 mr-3">
           <div class="text-center pb-3">
-            <img class="img-fluid text-center" src="../assets/images/oppo.jpg" alt="oppo" width="150">
+            <img class="img-fluid text-center" src="../assets/images/<?php echo $data['g_pic']?>" alt="oppo" width="150">
           </div>
-          <p>OPPO A5 2020</p>
-          <p>Dazzling White, 4GB RAM, 64GB Storage</p>
-          <h6 class="text-success">₱12,690.00</h6>
+          <p><?php echo $data['g_brand'] ?> <?php echo $data['g_model'] ?></p>
+          <p><?php echo $data['g_desc'] ?></p>
+          <h6 class="text-success">₱<?php echo $data['g_price'] ?>.00 / Per Day</h6>
             <a class="btn btn-primary col mt-3" href="view.php">View</a>
       </div>
+    <?php } ?>
     </div>
   </div>
 </main>
