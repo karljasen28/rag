@@ -1,3 +1,26 @@
+<?php
+
+  if (isset($_POST['btnLogin'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    echo $email;
+    echo $password;
+
+    require 'dbowner/db.php';
+    $sql = "SELECT * FROM users WHERE email = '$email' && password = '$password'";
+    $result = mysqli_query($con, $sql);
+    $rows = mysqli_num_rows($result);
+
+    if ($rows > 0) {
+      echo "<script>alert('Successfully logged in!')</script>";
+    }
+    else{
+       echo "<script>alert('Incorrect Credentials')</script>";
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +44,7 @@
       <li class="nav-item">
         <a class="nav-link" href="login.php">Login</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item dropdown">
         <a class="nav-link" href="register.php">Register</a>
       </li>
     </ul>
@@ -31,17 +54,20 @@
 <body>
     <main>
         <div class="container col-lg-5 bg-light px-5 py-5">
+        <div class="container text-center">
+          <img src="assets/images/logo.png" alt="" width="150">
+        </div>
         	<form class="form-horizonta py-5" method="POST" action="">
         		<div class="form-group">
         			<label>Email</label>
-        			<input class="form-control" type="email" name="email" placeholder="Enter Email" required="">
+        			<input class="form-control" type="email" name="email" placeholder="Enter Email" required>
         		</div>
         		<div class="form-group">
         			<label>Password</label>
-        			<input class="form-control" type="password" name="password" placeholder="Enter Password" required="">
+        			<input class="form-control" type="password" name="password" placeholder="Enter Password" required>
         		</div>
         		<div class="form-group">
-        			<input class="btn btn-primary col" type="submit" name="login" value="Login">
+        			<button class="btn btn-primary btn-block" name="btnLogin">Login</button>
         		</div>
         	</form>
         </div>
