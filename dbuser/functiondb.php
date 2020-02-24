@@ -47,4 +47,35 @@ function updateUserInfo($gender, $address, $contactno, $id) {
     return "UPDATED";
 }
 
+function getUserEmail($id) {
+    $db = db();
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
+function updateUserEmail($email, $id) {
+    $db = db();
+    $sql = "UPDATE users SET email = ? WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($email, $id));
+    $db = null;
+
+    return "UPDATED";
+}
+
+function updateUserPassword($password, $id) {
+    $db = db();
+    $sql = "UPDATE users SET password = ? WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($password, $id));
+    $db = null;
+
+    return "UPDATED";
+}
+
 ?>

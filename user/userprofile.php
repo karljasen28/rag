@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Update Profile</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
@@ -24,7 +24,7 @@ session_start();
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="login.php">Home</a>
+        <a class="nav-link" href="userdashboard.php">Home</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link active" href="userprofile.php">Profile</a>
@@ -79,12 +79,12 @@ session_start();
             <div class="form-group">
                 <label for="">Email</label>
                 <input class="form-control" type="email" value="<?php echo $data['email']?>" disabled>
-                <a class="text-primary" href="updateemail.php">Update Email</a>
+                <a class="text-primary" href="updateuseremail.php?id=<?php echo $data['id']?>">Update Email</a>
             </div>
             <div class="form-group">
                 <label for="">Password</label>
                 <input class="form-control" type="password" value="<?php echo $data['password']?>" disabled>
-                <a class="text-primary" href="changepassword.php">Change Password</a>
+                <a class="text-primary" href="userchangepassword.php?id=<?php echo $data['id']?>">Change Password</a>
             </div>
         </div>
     </div>

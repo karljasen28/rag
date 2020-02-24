@@ -40,7 +40,7 @@ if(isset($_POST['update'])) {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="login.php">Home</a>
+        <a class="nav-link" href="userdashboard.php">Home</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link active" href="userprofile.php">Profile</a>
