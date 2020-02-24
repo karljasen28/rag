@@ -1,3 +1,22 @@
+<?php 
+    require("dbuser/functiondb.php");
+
+    if(isset($_POST['register'])) {
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $gender = $_POST['gender'];
+        $bdate = $_POST['bdate'];
+        $address = $_POST['address'];
+        $contactno = $_POST['contactno'];
+        $email = $_POST['email'];
+        $password = md5($_POST['password']);
+        $type = $_POST['type'];
+        $status = "active";
+
+        $message = registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,18 +37,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="login.php">Login</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Register As
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="user-register.php">User Account</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="owner-register.php">Owner Account</a>
-        </div>
+      <li class="nav-item">
+        <a class="nav-link" href="register.php">Register</a>
       </li>
     </ul>
   </div>
@@ -38,7 +50,14 @@
 
     <main>
         <div class="container reg py-5">
-            <h3>User Registration Form</h3>
+            <h3>Registration Form</h3>
+            <?php
+                if(!empty($message)) {
+                    echo '<h3 class="alert alert-success">';
+                    echo $message;
+                    echo '</h3>';
+                }
+            ?>
             <form method="POST" action="">
                 <div class="row">
                     <div class="col">
@@ -47,7 +66,7 @@
                     </div>
                     <div class="col">
                         <label>Last name</label>
-                        <input class="form-control" type="text" name="fname" placeholder="First name" required="">
+                        <input class="form-control" type="text" name="lname" placeholder="First name" required="">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -79,6 +98,16 @@
                         <label>Email</label>
                         <input class="form-control" type="email" name="email" placeholder="Email" required="">
                     </div>
+                    <div class="col">
+                        <label>Client Type</label>
+                        <select class="form-control" name="type">
+                            <option hidden>Select Type</option>
+                            <option value="user">User</option>
+                            <option value="owner">OWner</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <label>Password</label>
                         <input class="form-control" type="password" name="password" placeholder="Password" required="">
