@@ -6,7 +6,8 @@ function db() {
 
 function registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status, $account) {
     $db = db();
-    $sql = "INSERT INTO users (fname, lname, gender, bdate, address, contactno, email, password, type, status, account) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO users (fname, lname, gender, bdate, address, contactno, email, password, type, status, account) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $cmd = $db->prepare($sql);
     $cmd->execute(array($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status, $account));
     $db = null;
@@ -135,30 +136,51 @@ function sendVerification( $id, $file, $status) {
     return "Verification Sent";
 }
 
-function addToCart($gad_id, $owner_id, $tran_status){
+function addToCart($gad_id, $owner_id, $user_id, $tran_status){
     $db = db();
-    $sql = "INSERT INTO transaction (gad_id, owner_id, tran_status) VALUES (?,?,?)";
+    $sql = "INSERT INTO transaction (gad_id, owner_id, user_id, tran_status) VALUES (?,?,?,?)";
     $cmd = $db->prepare($sql);
-    $cmd->execute(array($gad_id, $owner_id, $tran_status));
+    $cmd->execute(array($gad_id, $owner_id, $user_id, $tran_status));
     $db = null;
 
     return "Added to Cart";
 }
 
-function getTransaction() {
+function getTransaction($user_id) {
     $db = db();
-    $sql = "SELECT tran_id, tran_date, tran_status,
+    $sql = "SELECT tran_id, tran_date, tran_status, 
             gadgets.g_model, gadgets.g_brand, gadgets.g_price,
-            users.fname, users.lname FROM transaction
-            LEFT JOIN users ON transaction.owner_id = users.id
-            LEFT JOIN gadgets ON transaction.gad_id = gadgets.g_id
-            ORDER BY tran_id DESC";
+            users.fname, users.lname FROM transaction 
+            LEFT JOIN gadgets ON transaction.gad_id = gadgets.g_id 
+            LEFT JOIN users ON transaction.owner_id = users.id 
+            WHERE user_id = ?";
     $cmd = $db->prepare($sql);
-    $cmd->execute();
+    $cmd->execute(array($user_id));
     $row = $cmd->fetchAll();
     $db = null;
 
     return $row;
+}
+
+function trapValidation($user_id) {
+    $db = db();
+    $sql = "SELECT * FROM validation WHERE user_id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($user_id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
+function cancelTransaction($id) {
+    $db = db();
+    $sql = "DELETE FROM transaction WHERE tran_id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($id));
+    $db = null;
+
+    return "Canceled";
 }
 
 ?>

@@ -4,19 +4,11 @@ session_start();
 
 $id = $_SESSION['id'];
 
-if(isset($_POST['update'])) {
-    $gender = $_POST['gender'];
-    $address = $_POST['address'];
-    $contactno = $_POST['contactno'];
-
-    $output = updateUserInfo($gender, $address, $contactno, $id);
-
-    if($output === "UPDATED") {
-        header("location: userprofile.php");
-    } else {
-        $message = "Failed to Update";
-    }
+if(isset($_POST['cancel'])) {
+  $id = $_POST['id'];
+  $output = cancelTransaction($id);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +50,13 @@ if(isset($_POST['update'])) {
 
 <main>
     <div class="container bg-white py-5">
+    <?php
+      if(!empty($output)) {
+        echo '<p class="alert alert-warning col-lg-6">';
+        echo $output;
+        echo '</p>';
+    }
+    ?>
     <h4>Transaction List</h4>
     <table class="table table-hover">
         <thead class="bg-dark text-light text-center">
@@ -73,15 +72,20 @@ if(isset($_POST['update'])) {
         </thead>
 
         <tbody class="text-center">
-        <?php foreach(getTransaction() as $g) { ?>
+        <?php foreach(getTransaction($_SESSION['id']) as $g) { ?>
             <tr>
                 <td><?php echo $g['tran_id'] ?></td>
-                <td><?php echo $g['fname'] ?><?php echo $g['lname'] ?></td>
-                <td><?php echo $g['g_model'] ?><?php echo $g['g_brand'] ?></td>
+                <td><?php echo $g['fname'] ?><?php echo " " ?><?php echo $g['lname'] ?></td>
+                <td><?php echo $g['g_model'] ?><?php echo " " ?><?php echo $g['g_brand'] ?></td>
                 <td><?php echo $g['g_price'] ?>.00</td>
                 <td><?php echo $g['tran_date'] ?></td>
-                <td class="text-warning"><?php echo $g['tran_status'] ?></td>
-                <td></td>
+                <td><?php echo $g['tran_status'] ?></td>
+                <td>
+                  <form method="POST">
+                    <input type="text" name="id" value="<?php echo $g['tran_id']; ?>" hidden>
+                    <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
+                  </form>
+                </td>
             </tr>
         <?php } ?>
         </tbody>
