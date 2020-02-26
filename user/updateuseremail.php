@@ -48,6 +48,7 @@ if(isset($_POST['update'])) {
   </div>
 </div>
 </nav>
+<main>
     <div class="container bg-light py-5">
         <h3>Update Email</h3>
         <hr>
