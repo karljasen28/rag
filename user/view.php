@@ -17,10 +17,11 @@ session_start();
   if(isset($_POST['addtocart'])) {
       $gad_id = $_POST['gad_id'];
       $owner_id = $_POST['owner_id'];
+      $user_id = $_POST['user_id'];
       $tran_status = "pending";
 
-      $action = addToCart($gad_id, $owner_id, $tran_status);
-  }
+      $action = addToCart($gad_id, $owner_id, $user_id, $tran_status);
+  } 
   
 ?>
 <!DOCTYPE html>
@@ -86,8 +87,9 @@ session_start();
                 <form method="POST" action="" class="form-horizontal">
                     <div class="form-inline">
                         <h4>Gadget Information</h4>
-                        <input type="text" name="gad_id" value="<?php echo $g['g_id']?>" hidden>
-                        <input type="text" name="owner_id" value="<?php echo $g['owner_id']?>" hidden>
+                        <input type="text" name="gad_id" value="<?php echo $g['g_id']?>">
+                        <input type="text" name="owner_id" value="<?php echo $g['owner_id']?>">
+                        <input type="text" name="user_id" value="<?php echo $_SESSION['id']?>">
                         <button type="submit" name="addtocart" class="btn btn-success ml-auto mr-5"><i class="fas fa-cart-plus mr-2"></i> Add to cart</button>
                     </div>
                     <hr>

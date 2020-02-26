@@ -50,7 +50,7 @@ session_start();
         <div class="row">
             <div class="col">
                 <img class="rounded rounded-circle" src="../assets/images/<?php echo $data['pro_pic']?>" alt="profile" width="150" height="150">
-                <h5><?php echo $data['fname']; echo $data['lname'] ?></h5>
+                <h5 class="mt-3"><?php echo $data['fname']; echo " "; echo $data['lname'] ?></h5>
                 <a class="text-primary" href="editprofilepic.php?id=<?php echo $data['id']?>">Change Photo</a>
             </div>
         </div>

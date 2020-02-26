@@ -17,7 +17,11 @@ session_start();
   if($check_profile === null || empty($check_profile)) {
     $mes = "Choose your profile image";
   }
-  
+
+  foreach(trapValidation($_SESSION['id']) as $data) {
+    $pending_status = $data['val_status'];
+  }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,10 +59,18 @@ session_start();
   </div>
 </div>
 </nav>
-
+<input type="text" id="stats" value="<?php echo $pending_status ?>" hidden>
 <?php
+  if(!empty($pending_status) && $pending_status === "pending") {
+    echo '<div style="margin-left: auto; margin-right:auto;margin-top: 20px;"
+          <p class="alert alert-primary col-lg-6"> 
+          <strong>Attention!</strong> Requirements sent! Please wait for admin verification. 
+          </p>
+          </div>';
+  }
+
   if(!empty($warning)) {
-      echo '<div style="margin-left: auto; margin-right:auto;margin-top: 20px;"';
+      echo '<div id="alertHide" style="margin-left: auto; margin-right:auto;margin-top: 20px;"';
       echo '<p class="alert alert-warning col-lg-6">';
       echo $warning;
       echo '<a class="text-primary ml-3" href="verification.php?id='.$id.'">Click here to verify.</a>';
@@ -73,9 +85,10 @@ session_start();
     echo '</p>';
     echo '</div>';
 }
+
 ?>
 <input type="text" id="valid" value="<?php echo $check_status ?>" hidden>
-<div class="container-fluid py-5">
+<div class="container-fluid py-5" id="checkvalid">
   <div class="container">
     <div class="row">
       <?php foreach(getAllGadget() as $g) { ?>
@@ -115,6 +128,13 @@ session_start();
     document.getElementById("checkvalid").hidden = true;
   } else {
     document.getElementById("checkvalid").hidden = false;
+  }
+
+  var stats = document.getElementById("stats").value;
+  if(stats === "pending") {
+    document.getElementById("alertHide").hidden = true;
+  } else {
+    document.getElementById("alertHide").hidden = false;
   }
 
 </script>
