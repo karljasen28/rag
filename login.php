@@ -16,7 +16,7 @@
 
     if ($rows > 0) {
       if ($type == 'user') {
-        if ($status == 'active' || $status == 'unverified') {
+        if ($status == 'active') {
           $_SESSION['id'] = $id;
           echo "<script>alert('Logged in as user');window.location='user/userdashboard.php'</script>";
         }
@@ -25,12 +25,21 @@
         }
       }
       else if ($type == 'owner') {
-        if ($status == 'active' || $status == 'unverified') {
+        if ($status == 'active') {
           $_SESSION['id'] = $id;
           echo "<script>alert('Logged in as owner');window.location='owner/ownerdashboard.php'</script>";
         }
         else{
           echo "<script>alert('User inactive');window.location='login.php'</script>";
+        }
+      }
+      else if ($type == 'admin') {
+        if ($status == 'active') {
+          $_SESSION['id'] = $id;
+          echo "<script>alert('Logged in as admin');window.location='admin/admindashboard.php'</script>";
+        }
+        else{
+          mysqli_error();
         }
       }
     }
@@ -53,7 +62,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container">
-  <a class="navbar-brand" href="#">RAG</a>
+  <a class="navbar-brand" href="login.php"><img src="assets/images/logo-03.png" alt="" width="40"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

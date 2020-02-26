@@ -13,6 +13,13 @@
         $pro_pic = $data['pro_pic'];
         $account = $data['account'];
     }
+
+    $sql2 = "SELECT * FROM validation WHERE user_id = ".$id;
+    $result2 = mysqli_query($con, $sql2);
+    $rows1 = mysqli_num_rows($result2);
+    while($data = mysqli_fetch_assoc($result2)){
+        $val_status = $data['val_status'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,8 +62,25 @@
 </nav>
 
 <main>
-
+    <input type="text" id="stats" value="<?php echo $val_status;?>" hidden>
     <?php
+        if ($rows1 > 0) {
+            if ($val_status === 'pending') {
+            echo "<div class='container alert alert-primary alert-dismissible fade show' role='alert'>
+            <strong>Attention!</strong> Requirements sent! Please wait for admin verification.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+            </div>";
+        }
+            else {
+                echo "";
+            }
+        }
+        else {
+            echo "";
+        }
+        
         if (!$pro_pic) {
            echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert'>
             <strong>Warning!</strong> Change your profile picture for security purposes. <a href='editpic.php' class='btn btn-warning btn-sm text-white'>Change Profile Picture</a>
@@ -69,7 +93,7 @@
             echo "";
         }
         if ($account === 'unverified') {
-            echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert'>
+            echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert' id='alertHide'>
             <strong>Warning!</strong> Validate your account to unlock some features. <a href='validate.php' class='btn btn-warning btn-sm text-white'>Validate Now</a>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
@@ -173,6 +197,14 @@ if(hidden === "unverified") {
     document.getElementById("view").hidden = false;
     document.getElementById("view1").hidden = false;
     document.getElementById("view2").hidden = false;
+}
+
+var stats = document.getElementById("stats").value;
+if (stats === 'pending') {
+    document.getElementById("alertHide").hidden = true;
+}
+else{
+    document.getElementById("alertHide").hidden = false;
 }
 </script>
 </body>

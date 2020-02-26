@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_POST['send'])) {
     $file = $_POST['file'];
-    $status = "Pending";
+    $status = "pending";
     $output = sendVerification($_GET['id'], $file, $status);
 }
 
@@ -22,7 +22,7 @@ if(isset($_POST['send'])) {
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container">
-  <a class="navbar-brand" href="#">RAG</a>
+  <a class="navbar-brand" href="userdashboard.php"><img src="../assets/images/logo.png" alt="" width="100"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
