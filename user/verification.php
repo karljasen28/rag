@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_POST['send'])) {
     $file = $_POST['file'];
-    $status = "Pending";
+    $status = "pending";
     $output = sendVerification($_GET['id'], $file, $status);
 }
 

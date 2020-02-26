@@ -15,7 +15,7 @@ session_start();
   }
 
   if($check_profile === null || empty($check_profile)) {
-    $mes = "Complete your profile";
+    $mes = "Choose your profile image";
   }
   
 ?>
@@ -56,42 +56,45 @@ session_start();
 </div>
 </nav>
 
-<main>
-  <div class="container-fluid ml-auto">
+<?php
+  if(!empty($warning)) {
+      echo '<div style="margin-left: auto; margin-right:auto;margin-top: 20px;"';
+      echo '<p class="alert alert-warning col-lg-6">';
+      echo $warning;
+      echo '<a class="text-primary ml-3" href="verification.php?id='.$id.'">Click here to verify.</a>';
+      echo '</p>';
+      echo '</div>';
+  }
+  if(!empty($mes)) {
+    echo '<div style="margin-left: auto; margin-right:auto;margin-top: 20px;"';
+    echo '<p class="alert alert-warning col-lg-6">';
+    echo $mes;
+    echo '<a class="text-primary ml-3" href="userprofile.php">Click here.</a>';
+    echo '</p>';
+    echo '</div>';
+}
+?>
+<input type="text" id="valid" value="<?php echo $check_status ?>" hidden>
+<div class="container-fluid py-5">
+  <div class="container">
     <div class="row">
-      <div class="col">
-      <?php
-        if(!empty($warning)) {
-            echo '<p class="alert alert-warning">';
-            echo $warning;
-            echo '<a class="text-primary ml-3" href="verification.php?id='.$id.'">Click here to verify.</a>';
-            echo '</p>';
-        }
-        if(!empty($mes)) {
-          echo '<p class="alert alert-warning">';
-          echo $mes;
-          echo '<a class="text-primary ml-3" href="userprofile.php">Click here.</a>';
-          echo '</p>';
-      }
-      ?>
-      </div>
-    </div>
-    <div class="row" style="padding-left: 150px;">
-    <?php foreach(getAllGadget() as $data) { ?>
-      <div class="col-lg-2 bg-white py-3 mt-4 mr-3">
-          <input type="text" id="valid" value="<?php echo $check_status ?>" hidden>
-          <div class="text-center pb-3">
-            <img class="img-fluid text-center" src="../assets/images/<?php echo $data['g_pic']?>" alt="oppo" width="150">
+      <?php foreach(getAllGadget() as $g) { ?>
+        <div class="col-lg-2 bg-white mr-3 mt-3 py-2">
+          <div class="text-center">
+            <img src="../assets/images/<?php echo $g['g_pic'] ?>" alt="gadget image" width="120">
           </div>
-          <p><?php echo $data['g_brand'] ?> <?php echo $data['g_model'] ?></p>
-          <p><?php echo $data['g_desc'] ?></p>
-          <h6 class="text-success">₱<?php echo $data['g_price'] ?>.00 / Per Day</h6>
-            <a class="btn btn-primary col mt-3" href="view.php" id="checkvalid">View</a>
-      </div>
-    <?php } ?>
+          <p>
+          Model: <?php echo $g['g_model'] ?> <br>
+          Brand: <?php echo $g['g_brand'] ?> <br>
+          Description: <?php echo $g['g_desc'] ?> <br>
+          Price: <?php echo $g['g_price']; ?>.00
+          </p>
+          <a class="btn btn-info" href="view.php?id=<?php echo $g['g_id'] ?>">View</a>
+        </div>
+      <?php } ?>
     </div>
   </div>
-</main>
+</div>
 
 
 

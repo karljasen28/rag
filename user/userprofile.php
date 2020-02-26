@@ -26,10 +26,13 @@ session_start();
       <li class="nav-item">
         <a class="nav-link" href="userdashboard.php">Home</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item">
+        <a class="nav-link" href="transaction.php">Transaction</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link active" href="userprofile.php">Profile</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item">
         <a class="nav-link" href="../signout.php">Signout</a>
       </li>
     </ul>
