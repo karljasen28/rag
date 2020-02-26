@@ -100,6 +100,21 @@ function getAllGadget() {
     return $row;
 }
 
+function getGadgetId($id) {
+    $db = db();
+    $sql = "SELECT gadgets.owner_id, gadgets.g_id, gadgets.g_pic, gadgets.g_model, 
+            gadgets.g_brand, gadgets.g_price, gadgets.g_desc, gadgets.g_category,
+            users.fname, users.lname, users.address, users.contactno FROM gadgets
+            LEFT JOIN users ON gadgets.owner_id = users.id
+            WHERE g_id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
+}
+
 function updateProfileImage($profile, $id) {
     $db = db();
     $sql = "UPDATE users SET pro_pic = ? WHERE id = ?";
@@ -118,6 +133,32 @@ function sendVerification( $id, $file, $status) {
     $db = null;
 
     return "Verification Sent";
+}
+
+function addToCart($gad_id, $owner_id, $tran_status){
+    $db = db();
+    $sql = "INSERT INTO transaction (gad_id, owner_id, tran_status) VALUES (?,?,?)";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($gad_id, $owner_id, $tran_status));
+    $db = null;
+
+    return "Added to Cart";
+}
+
+function getTransaction() {
+    $db = db();
+    $sql = "SELECT tran_id, tran_date, tran_status,
+            gadgets.g_model, gadgets.g_brand, gadgets.g_price,
+            users.fname, users.lname FROM transaction
+            LEFT JOIN users ON transaction.owner_id = users.id
+            LEFT JOIN gadgets ON transaction.gad_id = gadgets.g_id
+            ORDER BY tran_id DESC";
+    $cmd = $db->prepare($sql);
+    $cmd->execute();
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
 }
 
 ?>
