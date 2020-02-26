@@ -19,13 +19,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link active" href="admindashboard.php">Home</a>
+        <a class="nav-link" href="admindashboard.php">Home</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="validationlist.php">Validation List</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link" href="list.php">Account List</a>
+        <a class="nav-link active" href="list.php">Account List</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="../signout.php">Signout</a>
@@ -35,7 +35,6 @@
 </div>
 </nav>
 <main>
-<div class="container">
     <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Owner</a>
@@ -43,16 +42,97 @@
         <li class="nav-item">
             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">User</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-        </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <table class="table mt-4">
+            <thead>
+                <tr>
+                <th scope="col">Profile Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Birthdate</th>
+                <th scope="col">Address</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Account</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            <?php
+                session_start();
+                $id = $_SESSION['id'];
+
+                require '../dbowner/db.php';
+                $sql = "CALL `getAllOwner`();";
+                $result = mysqli_query($con,$sql);
+
+                while ($data = mysqli_fetch_assoc($result)) {
+                echo"<tr>";
+                        echo"<td class='text-center'><img class='round rounded-circle' src='../assets/images/".$data['pro_pic']."' width='80'/></td>";
+                        echo"<td>".$data['fname']." ".$data['lname']."</td>";
+                        echo"<td>".$data['gender']."</td>";
+                        echo"<td>".$data['bdate']."</td>";
+                        echo"<td>".$data['address']."</td>";
+                        echo"<td>".$data['contactno']."</td>";
+                        echo"<td>".$data['email']."</td>";
+                        echo"<td>".$data['type']."</td>";
+                        echo"<td>".$data['status']."</td>";
+                        echo"<td>".$data['account']."</td>";
+                        echo"<td><a href='process.php?g_id=".$data['id']."' class='btn btn-danger'>Disable</a></td>";
+                echo"</tr>";
+                }
+            ?>
+            </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <table class="table mt-4">
+            <thead>
+                <tr>
+                <th scope="col">Profile Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Birthdate</th>
+                <th scope="col">Address</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Account</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            <?php
+
+                require '../dbowner/db.php';
+                $sql = "CALL `getAllUser`();";
+                $result = mysqli_query($con,$sql);
+
+                while ($data = mysqli_fetch_assoc($result)) {
+                echo"<tr>";
+                        echo"<td class='text-center'><img class='round rounded-circle' src='../assets/images/".$data['pro_pic']."' width='80'/></td>";
+                        echo"<td>".$data['fname']." ".$data['lname']."</td>";
+                        echo"<td>".$data['gender']."</td>";
+                        echo"<td>".$data['bdate']."</td>";
+                        echo"<td>".$data['address']."</td>";
+                        echo"<td>".$data['contactno']."</td>";
+                        echo"<td>".$data['email']."</td>";
+                        echo"<td>".$data['type']."</td>";
+                        echo"<td>".$data['status']."</td>";
+                        echo"<td>".$data['account']."</td>";
+                        echo"<td><a href='process.php?g_id=".$data['id']."' class='btn btn-danger'>Disable</a></td>";
+                echo"</tr>";
+                }
+            ?>
+            </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </main>
 <script type="text/javascript" src="../assets/js/jquery.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.bundle.js"></script>
