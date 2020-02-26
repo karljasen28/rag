@@ -4,14 +4,25 @@ function db() {
     return new PDO("mysql:host=localhost;dbname=rag","root","");
 }
 
-function registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status) {
+function registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status, $account) {
     $db = db();
-    $sql = "INSERT INTO users (fname, lname, gender, bdate, address, contactno, email, password, type, status) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO users (fname, lname, gender, bdate, address, contactno, email, password, type, status, account) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
     $cmd = $db->prepare($sql);
-    $cmd->execute(array($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status));
+    $cmd->execute(array($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status, $account));
     $db = null;
 
     return "Registration Success";
+}
+
+function checkVerified($id) {
+    $db = db();
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array($id));
+    $row = $cmd->fetchAll();
+    $db = null;
+
+    return $row;
 }
 
 function getUserProfile($fetch_id) {
@@ -97,6 +108,16 @@ function updateProfileImage($profile, $id) {
     $db = null;
 
     return "UPDATED";
+}
+
+function sendVerification( $id, $file, $status) {
+    $db = db();
+    $sql = "INSERT INTO validation (user_id, val_pic, val_status) VALUES (?,?,?)";
+    $cmd = $db->prepare($sql);
+    $cmd->execute(array( $id, $file, $status ));
+    $db = null;
+
+    return "Verification Sent";
 }
 
 ?>

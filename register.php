@@ -12,8 +12,9 @@
         $password = md5($_POST['password']);
         $type = $_POST['type'];
         $status = "active";
+        $account = "unverified";
 
-        $message = registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status);
+        $message = registerUser($fname, $lname, $gender, $bdate, $address, $contactno, $email, $password, $type, $status, $account);
     }
 ?>
 
@@ -103,11 +104,11 @@
                         <select class="form-control" name="type">
                             <option hidden>Select Type</option>
                             <option value="user">User</option>
-                            <option value="owner">OWner</option>
+                            <option value="owner">Owner</option>
                         </select>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col">
                         <label>Password</label>
                         <input class="form-control" type="password" name="password" placeholder="Password" required="">

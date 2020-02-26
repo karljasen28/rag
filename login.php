@@ -16,7 +16,7 @@
 
     if ($rows > 0) {
       if ($type == 'user') {
-        if ($status == 'active') {
+        if ($status == 'active' || $status == 'unverified') {
           $_SESSION['id'] = $id;
           echo "<script>alert('Logged in as user');window.location='user/userdashboard.php'</script>";
         }
@@ -25,7 +25,7 @@
         }
       }
       else if ($type == 'owner') {
-        if ($status == 'active') {
+        if ($status == 'active' || $status == 'unverified') {
           $_SESSION['id'] = $id;
           echo "<script>alert('Logged in as owner');window.location='owner/ownerdashboard.php'</script>";
         }
