@@ -1,3 +1,24 @@
+<?php
+  session_start();
+
+  require '../dbowner/db.php';
+
+  $id = $_SESSION['id'];
+  $sql = "SELECT * FROM users WHERE id=".$id;
+  $res = mysqli_query($con, $sql);
+  while ($data = mysqli_fetch_assoc($res)){
+    $pro_pic = $data['pro_pic'];
+    $fname = $data['fname'];
+    $lname = $data['lname'];
+    $gender = $data['gender'];
+    $bdate = $data['bdate'];
+    $address = $data['address'];
+    $contactno = $data['contactno'];
+    $email = $data['email'];
+    $password = $data['password'];
+    $account = $data['account'];
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +42,12 @@
       <li class="nav-item">
         <a class="nav-link" href="ownerdashboard.php">Home</a>
       </li>
+      <input type="text" id="hidden" value="<?php echo $account ?>" hidden>
       <li class="nav-item">
-        <a class="nav-link" href="ownerdashboard.php">Transactions</a>
+        <a class="nav-link" href="ownerdashboard.php" id="view2">Transactions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="devices.php">My Devices</a>
+        <a class="nav-link" href="devices.php" id="view1">My Devices</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="owner_profile.php">Profile</a>
@@ -38,56 +60,55 @@
 </div>
 </nav>
 <main>
-<main>
+
     <div class="container bg-white mb-5 py-3 px-5">
-        <h3>User Profile</h3>
+        <h3>Owner Profile</h3>
         <hr>
         
         <div class="row">
             <div class="col">
-                <img class="rounded rounded-circle" src="../assets/images/profile.jpg" alt="profile" width="130" height="100">
-                <h5></h5>
-                <a class="text-primary" href="editprofilepic">Change Photo</a>
+                <img class="rounded rounded-circle" src="../assets/images/<?php echo $pro_pic;?>" alt="profile" width="150" height="150">
+                <br>
+                <a class="text-primary" href="editpic.php">Change Photo</a>
             </div>
         </div>
         <div class="form-inline pt-5">
             <div class="form-group">
               <label>Gender </label>
-              <input class="form-control mx-3" type="email" value="" disabled>
+              <input class="form-control mx-3" type="email" value="<?php echo $gender;?>" disabled>
             </div>
             <div class="form-group">
                 <label>Birthdate </label>
-                <input class="form-control mx-3" type="email" value="" disabled>
+                <input class="form-control mx-3" type="email" value="<?php echo $bdate;?>" disabled>
             </div>
         </div>
         <div class="form-inline pt-5">
             <div class="form-group">
               <label>Address </label>
-              <input class="form-control mx-3" type="email" value="" disabled>
+              <input class="form-control mx-3" type="email" value="<?php echo $address;?>" disabled>
             </div>
             <div class="form-group">
                 <label>Contact No. </label>
-                <input class="form-control mx-3" type="email" value="" disabled>
+                <input class="form-control mx-3" type="email" value="<?php echo $contactno;?>" disabled>
             </div>
         </div>
         <br>
-        <a class="text-primary" href="">Edit Info</a>
+        <a class="text-primary" href="editinfo.php">Edit Info</a>
         <hr>
         <h3>Account Information</h3>
         <div class="form-horizontal">
             <div class="form-group">
                 <label for="">Email</label>
-                <input class="form-control" type="email" value="" disabled>
-                <a class="text-primary" href="">Update Email</a>
+                <input class="form-control" type="email" value="<?php echo $email;?>" disabled>
+                <a class="text-primary" href="editemail.php">Update Email</a>
             </div>
             <div class="form-group">
                 <label for="">Password</label>
-                <input class="form-control" type="password" value="" disabled>
-                <a class="text-primary" href="">Change Password</a>
+                <input class="form-control" type="password" value="<?php echo $password;?>" disabled>
+                <a class="text-primary" href="ownerchangepass.php">Change Password</a>
             </div>
         </div>
     </div>
-</main>
 </main>
 <script type="text/javascript" src="../assets/js/jquery.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.bundle.js"></script>
@@ -98,5 +119,15 @@
 <script type="text/javascript" src="../assets/js/bootstrap.js.map"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js.map"></script>
+<script>
+var hidden = document.getElementById("hidden").value;
+if(hidden === "unverified") {
+    document.getElementById("view1").hidden = true;
+    document.getElementById("view2").hidden = true;
+} else {
+    document.getElementById("view1").hidden = false;
+    document.getElementById("view2").hidden = false;
+}
+</script>
 </body>
 </html>

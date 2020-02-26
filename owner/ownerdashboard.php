@@ -11,6 +11,7 @@
     $result1 = mysqli_query($con, $sql1);
     while ($data = mysqli_fetch_assoc($result1)) {
         $pro_pic = $data['pro_pic'];
+        $account = $data['account'];
     }
 ?>
 <!DOCTYPE html>
@@ -37,10 +38,10 @@
         <a class="nav-link" href="ownerdashboard.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="ownerdashboard.php">Transactions</a>
+        <a class="nav-link" href="ownerdashboard.php" id="view2">Transactions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="devices.php">My Devices</a>
+        <a class="nav-link" href="devices.php" id="view1">My Devices</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" href="owner_profile.php">Profile</a>
@@ -58,7 +59,7 @@
     <?php
         if (!$pro_pic) {
            echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert'>
-            <strong>Warning!</strong> Change your profile picture for security purposes. <a href='' class='btn btn-warning btn-sm text-white'>Change Profile Picture</a>
+            <strong>Warning!</strong> Change your profile picture for security purposes. <a href='editpic.php' class='btn btn-warning btn-sm text-white'>Change Profile Picture</a>
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                 <span aria-hidden='true'>&times;</span>
             </button>
@@ -67,8 +68,19 @@
         else {
             echo "";
         }
+        if ($account === 'unverified') {
+            echo "<div class='container alert alert-warning alert-dismissible fade show' role='alert'>
+            <strong>Warning!</strong> Validate your account to unlock some features. <a href='validate.php' class='btn btn-warning btn-sm text-white'>Validate Now</a>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+            </div>";
+        }else{
+            echo "";
+        }
     ?>
-    <div class="container">
+    <input type="text" id="hidden" value="<?php echo $account ?>" hidden>
+    <div class="container" id="view">
         <div class="row">
             <div class="col m-auto">
                 <div class="card" style="width: 20rem;">
@@ -151,5 +163,17 @@
 <script type="text/javascript" src="../assets/js/bootstrap.js.map"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js.map"></script>
+<script>
+var hidden = document.getElementById("hidden").value;
+if(hidden === "unverified") {
+    document.getElementById("view").hidden = true;
+    document.getElementById("view1").hidden = true;
+    document.getElementById("view2").hidden = true;
+} else {
+    document.getElementById("view").hidden = false;
+    document.getElementById("view1").hidden = false;
+    document.getElementById("view2").hidden = false;
+}
+</script>
 </body>
 </html>
