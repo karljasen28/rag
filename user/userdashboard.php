@@ -100,7 +100,7 @@ session_start();
           Model: <?php echo $g['g_model'] ?> <br>
           Brand: <?php echo $g['g_brand'] ?> <br>
           Description: <?php echo $g['g_desc'] ?> <br>
-          Price: <?php echo $g['g_price']; ?>.00
+          Price: <strong class="text-success"> <?php echo $g['g_price']; ?>.00 </strong>
           </p>
           <a class="btn btn-info" href="view.php?id=<?php echo $g['g_id'] ?>">View</a>
         </div>

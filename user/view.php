@@ -38,7 +38,7 @@ session_start();
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <div class="container">
-  <a class="navbar-brand" href="#">RAG</a>
+<a class="navbar-brand" href="userdashboard.php"><img src="../assets/images/logo.png" alt="" width="100"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -87,9 +87,9 @@ session_start();
                 <form method="POST" action="" class="form-horizontal">
                     <div class="form-inline">
                         <h4>Gadget Information</h4>
-                        <input type="text" name="gad_id" value="<?php echo $g['g_id']?>">
-                        <input type="text" name="owner_id" value="<?php echo $g['owner_id']?>">
-                        <input type="text" name="user_id" value="<?php echo $_SESSION['id']?>">
+                        <input type="text" name="gad_id" value="<?php echo $g['g_id']?>" hidden>
+                        <input type="text" name="owner_id" value="<?php echo $g['owner_id']?>" hidden>
+                        <input type="text" name="user_id" value="<?php echo $_SESSION['id']?>" hidden>
                         <button type="submit" name="addtocart" class="btn btn-success ml-auto mr-5"><i class="fas fa-cart-plus mr-2"></i> Add to cart</button>
                     </div>
                     <hr>
