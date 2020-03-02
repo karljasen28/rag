@@ -95,7 +95,7 @@ if (isset($_POST['btnPlaceOrder'])) {
     $sql2 = "UPDATE booking SET tran_status = 'pending' WHERE tran_id =".$tran_id;
     $res2 = mysqli_query($con,$sql2);
     if ($res2) {
-        echo "<script>alert('Please wait for admin approval!');window.location='userdashboard.php'</script>";
+        echo "<script>alert('Please wait for owner approval!');window.location='userdashboard.php'</script>";
     }
     else{
         mysqli_error($con);

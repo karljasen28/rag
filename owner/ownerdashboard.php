@@ -125,7 +125,7 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-danger">2</span> on going transaction</h6>
                     
                     <div class="text-center py-3"><img src="../assets/images/transfer.svg" alt="" width="150"></div>
-                    <a href="#" class="btn btn-primary btn-block mt-2">View</a>
+                    <a href="owner_transaction.php" class="btn btn-primary btn-block mt-2">View</a>
                 </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-danger">9</span> approval request</h6>
                     
                     <div class="text-center py-3"><img src="../assets/images/request.svg" alt="" width="150"></div>
-                    <a href="#" class="btn btn-primary btn-block mt-2">View</a>
+                    <a href="owner_transaction.php" class="btn btn-primary btn-block mt-2">View</a>
                 </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-danger">20</span> Finished Transactions</h6>
                     
                     <div class="text-center py-3"><img src="../assets/images/tick.svg" alt="" width="150"></div>
-                    <a href="#" class="btn btn-primary btn-block mt-2">View</a>
+                    <a href="owner_transaction.php" class="btn btn-primary btn-block mt-2">View</a>
                 </div>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                     <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-danger">20</span> Cancelled transactions</h6>
                     
                     <div class="text-center py-3"><img src="../assets/images/cancel.svg" alt="" width="150"></div>
-                    <a href="#" class="btn btn-primary btn-block mt-2">View</a>
+                    <a href="owner_transaction.php" class="btn btn-primary btn-block mt-2">View</a>
                 </div>
                 </div>
             </div>
