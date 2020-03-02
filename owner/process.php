@@ -15,4 +15,8 @@
             echo "<script>alert('Deletion unsuccessful!');window.location='devices.php'</script>";
         }
     }
+
+    if (isset($_GET['tran_id'])) {
+        # code...
+    }
 ?>

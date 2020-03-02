@@ -1,15 +1,4 @@
-<?php 
-require('../dbuser/functiondb.php');
-session_start();
 
-$id = $_SESSION['id'];
-
-if(isset($_POST['cancel'])) {
-  $id = $_POST['id'];
-  $output = cancelTransaction($id);
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,15 +39,19 @@ if(isset($_POST['cancel'])) {
 </nav>
 
 <main>
+<div class="container">
+<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">On Cart</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pending Transaction</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
     <div class="container bg-white py-5">
-    <?php
-      if(!empty($output)) {
-        echo '<p class="alert alert-warning col-lg-6">';
-        echo $output;
-        echo '</p>';
-    }
-    ?>
-    <h4>Transaction List</h4>
+    <h4>Cart List</h4>
     <table class="table table-hover">
         <thead class="bg-dark text-light text-center">
             <tr>
@@ -73,25 +66,76 @@ if(isset($_POST['cancel'])) {
         </thead>
 
         <tbody class="text-center">
-        <?php foreach(getTransaction($_SESSION['id']) as $g) { ?>
-            <tr>
-                <td><?php echo $g['tran_id'] ?></td>
-                <td><?php echo $g['fname'] ?><?php echo " " ?><?php echo $g['lname'] ?></td>
-                <td><?php echo $g['g_model'] ?><?php echo " " ?><?php echo $g['g_brand'] ?></td>
-                <td><?php echo $g['g_price'] ?>.00</td>
-                <td><?php echo $g['tran_date'] ?></td>
-                <td><?php echo $g['tran_status'] ?></td>
-                <td>
-                  <form method="POST">
-                    <input type="text" name="id" value="<?php echo $g['tran_id']; ?>" hidden>
-                    <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
-                  </form>
-                </td>
-            </tr>
-        <?php } ?>
+        <?php 
+
+        session_start();
+        require '../dbowner/db.php';
+        $sql = "SELECT * FROM booking JOIN users ON booking.owner_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
+                WHERE booking.tran_status = 'in cart'";
+        $res = mysqli_query($con, $sql);
+
+        while ($data = mysqli_fetch_assoc($res)) {
+          echo "<tr>";
+            echo "<td>".$data['tran_id']."</td>";
+            echo "<td>".$data['fname']."".$data['lname']."</td>";
+            echo "<td>".$data['g_brand']." ".$data['g_model']."</td>";
+            echo "<td>".$data['g_price']."</td>";
+            echo "<td>".$data['tran_date']."</td>";
+            echo "<td>".$data['tran_status']."</td>";
+            echo "<td><a href='cart.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>View</a> <a href='' class='btn btn-danger'>Cancel</a></td>";
+          echo "</tr>";
+        }
+        ?>
         </tbody>
     </table>
     </div>
+  </div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+  
+        <div class="container bg-white py-5">
+    <h4>Cart List</h4>
+    <table class="table table-hover">
+        <thead class="bg-dark text-light text-center">
+            <tr>
+                <th>#</th>
+                <th>Owner</th>
+                <th>Device</th>
+                <th>Rental Price</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody class="text-center">
+        <?php 
+        require '../dbowner/db.php';
+        $sql = "SELECT * FROM booking JOIN users ON booking.owner_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
+                WHERE booking.tran_status = 'pending'";
+        $res = mysqli_query($con, $sql);
+
+        while ($data = mysqli_fetch_assoc($res)) {
+          $total = $data['g_price'] * $data['no_days'];
+          echo "<tr>";
+            echo "<td>".$data['tran_id']."</td>";
+            echo "<td>".$data['fname']."".$data['lname']."</td>";
+            echo "<td>".$data['g_brand']." ".$data['g_model']."</td>";
+            echo "<td>".$total."</td>";
+            echo "<td>".$data['tran_date']."</td>";
+            echo "<td>".$data['tran_status']."</td>";
+          echo "</tr>";
+        }
+        ?>
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- table -->
+
+<!-- end of table  -->
+    
 </main>
 
 <script type="text/javascript" src="../assets/js/jquery.js"></script>
