@@ -86,11 +86,11 @@ while ($data = mysqli_fetch_assoc($res)) {
                     </div>
                     <form action="" class="form-horizontal">
                       <div class="form-group col-lg-3" style="margin-left: 21%;">
-                        <input type="number" class="form-control my-2" name="no_days" placeholder="# of days">
+                        <input type="number" class="form-control my-2" name="no_days" placeholder="# of days" required>
                         <label for="">Start Date</label>
-                        <input type="date" class="form-control mb-2" name="start_date">
+                        <input type="date" class="form-control mb-2" name="start_date" required>
                         <label for="">End Date</label>
-                        <input type="date" class="form-control" name="end_date" placeholder="end">
+                        <input type="date" class="form-control" name="end_date" placeholder="end" required>
                       </div>
                     </form>
                     <div class="form-group mt-5">

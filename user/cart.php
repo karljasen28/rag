@@ -101,6 +101,7 @@ if (isset($_POST['btnPlaceOrder'])) {
         mysqli_error($con);
     }
 }
+
 ?>
                 
 
