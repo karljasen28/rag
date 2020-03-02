@@ -117,6 +117,7 @@
         $res = mysqli_query($con, $sql);
 
         while ($data = mysqli_fetch_assoc($res)) {
+          $owner_id = $data['owner_id'];
           $total = $data['g_price'] * $data['no_days'];
           echo "<tr>";
             echo "<td>".$data['tran_id']."</td>";
@@ -162,7 +163,9 @@
         $sql = "SELECT * FROM booking JOIN users ON booking.owner_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
                 WHERE booking.tran_status = 'finished'";
         $res = mysqli_query($con, $sql);
-
+        // $sql2 = "SELECT * FROM ratings WHERE owner_id=".$owner_id;
+        // $res2 = mysqli_query($con, $sql2);
+        // $rows = mysqli_num_rows($res2);
         while ($data = mysqli_fetch_assoc($res)) {
           $total = $data['g_price'] * $data['no_days'];
           echo "<tr>";
