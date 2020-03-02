@@ -184,7 +184,7 @@
         $id = $_SESSION['id'];
 
         require '../dbowner/db.php';
-        $sql = "INSERT INTO gadgets(g_pic,g_model,g_brand,g_serial,g_price,g_desc,g_category,owner_id) VALUES('$g_pic','$g_model','$g_brand','$g_serial','$g_fee','$g_desc','$g_category',$id)";
+        $sql = "INSERT INTO gadgets(g_pic,g_model,g_brand,g_serial,g_price,g_desc,g_category,g_status,owner_id) VALUES('$g_pic','$g_model','$g_brand','$g_serial','$g_fee','$g_desc','$g_category','available',$id)";
         $result = mysqli_query($con, $sql);
 
         if ($result) {

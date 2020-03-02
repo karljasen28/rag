@@ -46,6 +46,24 @@
     while ($data = mysqli_fetch_assoc($res)) {
         $pro_pic = $data['pro_pic'];
         $fname = $data['fname'].''.$data['lname'];
+        $owner_id = $data['owner_id'];
+    }
+
+    if (isset($_POST['btnRate'])) {
+        $owner = $_POST['owner_id'];
+        $rate = $_POST['rate'];
+        $comment = $_POST['comment'];
+        
+        require '../dbowner/db.php';
+        $sql2 = "INSERT INTO ratings(user_id,owner_id,rate,rate_comment) VALUES($id,$owner,'$rate','$comment')";
+        $result = mysqli_query($con, $sql2);
+
+        if ($result) {
+            echo "<script>alert('Rate Added!');window.location='userdashboard.php'</script>";
+        }
+        else {
+            mysqli_error($con);
+        }
     }
 ?>
 <main>
@@ -60,10 +78,11 @@
             </div>
             <div class="col">
                 <h5><?php echo $fname;?></h5><br>
-                <form action="">
+                <form action="" method="POST">
+                <input type="text" name="owner_id" value="<?php echo $owner_id?>" hidden>
                 <div class="form-group">
                     <label for="">Stars:</label>
-                    <select class="form-control" name="gender" required="">
+                    <select class="form-control" name="rate" required="">
                         <option hidden>Select Rating</option>
                         <option value="1">⭐</option>
                         <option value="2">⭐⭐</option>
@@ -77,7 +96,7 @@
                     <textarea class="form-control" name="comment" rows="3"></textarea>
                 </div>
                 <div>
-                    <button class="btn btn-primary btn-block btn-lg mb-4">Rate now!</button>
+                    <button class="btn btn-primary btn-block btn-lg mb-4" name="btnRate">Rate now!</button>
                 </div>
                 </form>
             </div>
