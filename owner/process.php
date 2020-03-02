@@ -29,4 +29,17 @@
             mysqli_error($con);
                 }
     }
+    if (isset($_GET['discard_id'])) {
+        $tran_id = $_GET['discard_id'];
+
+        require '../dbowner/db.php';
+        $sql = "UPDATE booking SET tran_status='rejected' WHERE tran_id=".$tran_id;
+        $res = mysqli_query($con, $sql);
+        if ($res) {
+            echo "<script>alert('You rejected this request!');window.location='owner_transaction.php'</script>";
+        }
+        else{
+            mysqli_error($con);
+                }
+    }
 ?>

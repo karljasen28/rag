@@ -10,6 +10,34 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
+  <a class="navbar-brand" href="ownerdashboard.php"><img src="../assets/images/logo.png" alt="" width="100"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="ownerdashboard.php">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="owner_transaction.php" id="view2">Transactions</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="devices.php" id="view1">My Devices</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="owner_profile.php">Profile</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="../signout.php">Signout</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
 <main>
     <div class="container">
         <table class="table table-hover">
@@ -45,11 +73,11 @@
             echo "<td>".$data['start_date']."</td>";
             echo "<td>".$data['end_date']."</td>";
             echo "<td>".$data['tran_status']."</td>";
-            if ($data['tran_status'] == 'approved') {
-                echo "<td>Approved</td>";
+            if ($data['tran_status'] == 'approved' || $data['tran_status'] == 'rejected') {
+                echo "<td>---</td>";
             }
             else{
-                echo "<td><a href='process.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Approve</a></td>";
+                echo "<td><a href='process.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Approve</a> <a href='process.php?discard_id=".$data['tran_id']."' class='btn btn-danger'>Discard</a></td>";
             }
             
           echo "</tr>";
