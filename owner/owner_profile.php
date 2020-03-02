@@ -18,6 +18,12 @@
     $password = $data['password'];
     $account = $data['account'];
   }
+
+  $sql2 = "SELECT AVG(rate) as avg FROM ratings WHERE owner_id=".$id;
+  $res2 = mysqli_query($con, $sql2);
+  while ($data = mysqli_fetch_assoc($res2)){
+      $avg = $data['avg'];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +102,10 @@
         <br>
         <a class="text-primary" href="editinfo.php">Edit Info</a>
         <hr>
+        <div>
+        <h5>Rating</h5>
+          <h1>⭐ <?php echo round($avg, 1);?></h1><br>
+        </div>
         <h3>Account Information</h3>
         <div class="form-horizontal">
             <div class="form-group">
