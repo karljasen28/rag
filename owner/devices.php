@@ -39,21 +39,22 @@
     </div>
     </nav> 
 <main>
-    <div class="container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary ml-5" data-toggle="modal" data-target="#exampleModal">
         Add a device
     </button><br>
 
     <table class="table mt-4">
     <thead>
         <tr>
-        <th scope="col">#</th>
+        <th scope="col"></th>
         <th scope="col">Brand</th>
         <th scope="col">Model</th>
         <th scope="col">Serial</th>
         <th scope="col">Renting Fee</th>
         <th scope="col">Description</th>
-        <th scope="col" colspan="3">Action</th>
+        <th scope="col">Category</th>
+        <th scope="col">Status</th>
+        <th scope="col" colspan="3" class="text-center">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -68,14 +69,24 @@
 
         while ($data = mysqli_fetch_assoc($result)) {
            echo"<tr>";
-                echo"<td>".$data['g_id']."</td>";
+                echo"<td><img src='../assets/images/".$data['g_pic']."' width='150'></td>";
                 echo"<td>".$data['g_brand']."</td>";
                 echo"<td>".$data['g_model']."</td>";
                 echo"<td>".$data['g_serial']."</td>";
                 echo"<td>".$data['g_price']."</td>";
                 echo"<td>".$data['g_desc']."</td>";
-                echo"<td><a href='' class='btn btn-success'>Edit</a></td>";
-                echo"<td><a href='process.php?g_id=".$data['g_id']."' class='btn btn-danger'>Delete</a></td>";
+                echo"<td>".$data['g_category']."</td>";
+                if ($data['g_status'] == 'unavailable'){
+                    echo"<td><span class='text-danger'>".$data['g_status']."</span></td>";
+                }else{
+                    echo"<td><span class='text-success'>".$data['g_status']."</span></td>";
+                }
+                if ($data['g_status'] == 'unavailable') {
+                    echo"<td><a href='' class='btn btn-success'>Edit</a> <a href='process.php?available_id=".$data['g_id']."' class='btn btn-primary'>Set as available</a></td>";
+                }
+                else {
+                    echo"<td><a href='' class='btn btn-success'>Edit</a> <a href='process.php?g_id=".$data['g_id']."' class='btn btn-danger'>Set as unavailable</a></td>";
+                }
            echo"</tr>";
         }
     ?>
@@ -147,7 +158,7 @@
         </div>
         
     </div>
-    </div>
+    
 </main>
 <script type="text/javascript" src="../assets/js/jquery.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.bundle.js"></script>

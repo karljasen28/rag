@@ -5,14 +5,28 @@
         $g_id = $_GET['g_id'];
 
         require '../dbowner/db.php';
-        $sql = "DELETE FROM gadgets WHERE g_id=".$g_id;
+        $sql = "UPDATE gadgets SET g_status='unavailable' WHERE g_id=".$g_id;
         $res = mysqli_query($con, $sql);
 
         if ($res) {
-            echo "<script>alert('Device deleted!');window.location='devices.php'</script>";
+            echo "<script>alert('Device deactivated!');window.location='devices.php'</script>";
         }
         else{
-            echo "<script>alert('Deletion unsuccessful!');window.location='devices.php'</script>";
+            echo "<script>alert('Error!');window.location='devices.php'</script>";
+        }
+    }
+    if (isset($_GET['available_id'])) {
+        $g_id = $_GET['available_id'];
+
+        require '../dbowner/db.php';
+        $sql = "UPDATE gadgets SET g_status='available' WHERE g_id=".$g_id;
+        $res = mysqli_query($con, $sql);
+
+        if ($res) {
+            echo "<script>alert('Device availability success!');window.location='devices.php'</script>";
+        }
+        else{
+            echo "<script>alert('Error!');window.location='devices.php'</script>";
         }
     }
 
