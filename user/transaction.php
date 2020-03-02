@@ -47,6 +47,9 @@
   <li class="nav-item">
     <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pending Transaction</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Finished Transaction</a>
+  </li>
 </ul>
 <div class="tab-content" id="pills-tabContent">
   <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -92,7 +95,7 @@
   </div>
   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
   
-        <div class="container bg-white py-5">
+    <div class="container bg-white py-5">
     <h4>Cart List</h4>
     <table class="table table-hover">
         <thead class="bg-dark text-light text-center">
@@ -136,6 +139,46 @@
         </tbody>
     </table>
     </div>
+  </div>
+  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+      <div class="container bg-white py-5">
+    <h4>Cart List</h4>
+    <table class="table table-hover">
+        <thead class="bg-dark text-light text-center">
+            <tr>
+                <th>#</th>
+                <th>Owner</th>
+                <th>Device</th>
+                <th>Rental Price</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody class="text-center">
+        <?php 
+        require '../dbowner/db.php';
+        $sql = "SELECT * FROM booking JOIN users ON booking.owner_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
+                WHERE booking.tran_status = 'finished'";
+        $res = mysqli_query($con, $sql);
+
+        while ($data = mysqli_fetch_assoc($res)) {
+          $total = $data['g_price'] * $data['no_days'];
+          echo "<tr>";
+            echo "<td>".$data['tran_id']."</td>";
+            echo "<td>".$data['fname']."".$data['lname']."</td>";
+            echo "<td>".$data['g_brand']." ".$data['g_model']."</td>";
+            echo "<td>".$total."</td>";
+            echo "<td>".$data['tran_date']."</td>";
+            echo "<td><span class='text-success'>".$data['tran_status']."</span></td>";
+            echo "<td><a href='rate.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Rate this owner</a></td>";
+          echo "</tr>";
+        }
+        ?>
+        </tbody>
+    </table>
+    </div>    
   </div>
 </div>
 </div>
