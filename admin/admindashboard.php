@@ -102,7 +102,7 @@
                     <h5 class="card-title">Verification List</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-danger"><?php echo $rows7;?></span> pending</h6><br><br>
                     <div class="text-center py-3"><img src="../assets/images/tick.svg" alt="" width="150"></div>
-                    <a href="list.php" class="btn btn-primary btn-block mt-2">View</a>
+                    <a href="validationlist.php" class="btn btn-primary btn-block mt-2">View</a>
                 </div>
                 </div>
             </div>
