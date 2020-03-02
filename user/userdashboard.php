@@ -101,9 +101,17 @@ session_start();
           Model: <?php echo $g['g_model'] ?> <br>
           Brand: <?php echo $g['g_brand'] ?> <br>
           Description: <?php echo $g['g_desc'] ?> <br>
-          Price: <strong class="text-success"> <?php echo $g['g_price']; ?>.00 </strong>
+          Price: <strong class="text-success"> <?php echo $g['g_price']; ?>.00 </strong><br>
+          <?php
+            if ($g['g_status'] == 'available') {
+              echo "<strong><span class='text-success'>".$g['g_status']."</span></strong><br><br>";
+              echo "<a class='btn btn-info' href='view.php?id=".$g['g_id']."'>View</a>";
+            }else{
+              echo "<strong><span class='text-danger'>".$g['g_status']."</span></strong><br><br>";
+              echo "<button class='btn btn-danger' disabled>View</button>";
+            }
+          ?>
           </p>
-          <a class="btn btn-info" href="view.php?id=<?php echo $g['g_id'] ?>">View</a>
         </div>
       <?php } ?>
     </div>
