@@ -32,8 +32,7 @@
 
         session_start();
         require '../dbowner/db.php';
-        $sql = "SELECT * FROM booking JOIN users ON booking.user_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
-                WHERE booking.tran_status = 'pending'";
+        $sql = "SELECT * FROM booking JOIN users ON booking.user_id = users.id join gadgets ON booking.gad_id = gadgets.g_id";
         $res = mysqli_query($con, $sql);
 
         while ($data = mysqli_fetch_assoc($res)) {
@@ -47,7 +46,7 @@
             echo "<td>".$data['end_date']."</td>";
             echo "<td>".$data['tran_status']."</td>";
             if ($data['tran_status'] == 'approved') {
-                echo "<td><button class='btn btn-danger' disabled> Approve </button></td>";
+                echo "<td>Approved</td>";
             }
             else{
                 echo "<td><a href='process.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Approve</a></td>";

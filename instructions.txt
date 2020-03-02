@@ -1,0 +1,9 @@
+1. go to http://localhost/phpmyadmin/
+
+2. create database 'rag'
+
+3. import sql file
+
+4. go to http://localhost/rag/login.php
+
+5. Youre good to go.

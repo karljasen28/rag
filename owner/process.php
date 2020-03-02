@@ -17,6 +17,16 @@
     }
 
     if (isset($_GET['tran_id'])) {
-        # code...
+        $tran_id = $_GET['tran_id'];
+
+        require '../dbowner/db.php';
+        $sql = "UPDATE booking SET tran_status='approved' WHERE tran_id=".$tran_id;
+        $res = mysqli_query($con, $sql);
+        if ($res) {
+            echo "<script>alert('You approved this user to rent your gadget!');window.location='owner_transaction.php'</script>";
+        }
+        else{
+            mysqli_error($con);
+                }
     }
 ?>
