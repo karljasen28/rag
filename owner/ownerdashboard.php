@@ -46,7 +46,7 @@
         <a class="nav-link" href="ownerdashboard.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="ownerdashboard.php" id="view2">Transactions</a>
+        <a class="nav-link" href="owner_transaction.php" id="view2">Transactions</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="devices.php" id="view1">My Devices</a>

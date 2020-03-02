@@ -1,28 +1,27 @@
 <?php
-require('../dbuser/functiondb.php');
 session_start();
+$id = $_SESSION['id'];
+$gad_id = $_GET['id'];
 
-  $output = checkVerified($_SESSION['id']);
-  $id = $_SESSION['id'];
-
-  foreach($output as $data) {
-    $check_status = $data['account'];
-    $check_profile = $data['pro_pic'];
-  }
-
-  if($check_profile === null || empty($check_profile)) {
-    $mes = "Choose your profile image";
-  }
-
-  if(isset($_POST['addtocart'])) {
-      $gad_id = $_POST['gad_id'];
-      $owner_id = $_POST['owner_id'];
-      $user_id = $_POST['user_id'];
-      $tran_status = "pending";
-
-      $action = addToCart($gad_id, $owner_id, $user_id, $tran_status);
-  } 
-  
+require '../dbowner/db.php';
+$sql = "SELECT * FROM gadgets join users on gadgets.owner_id = users.id WHERE g_id=".$gad_id;
+$res = mysqli_query($con, $sql);
+while ($data = mysqli_fetch_assoc($res)) {
+  $g_pic = $data['g_pic'];
+  $g_model = $data['g_model'];
+  $g_brand = $data['g_brand'];
+  $g_serial = $data['g_serial'];
+  $g_price = $data['g_price'];
+  $g_desc = $data['g_desc'];
+  $g_category = $data['g_category'];
+  $owner_id = $data['id'];
+  $fname = $data['fname'];
+  $lname = $data['lname'];
+  $contactno = $data['contactno'];
+  $address = $data['address'];
+  $pro_pic = $data['pro_pic'];
+  $email = $data['email'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,58 +62,52 @@ session_start();
 </div>
 </nav>
 
-<?php
-  if(!empty($mes)) {
-    echo '<div style="margin-left: auto; margin-right:auto;margin-top: 20px;"';
-    echo '<p class="alert alert-warning col-lg-6">';
-    echo $mes;
-    echo '<a class="text-primary ml-3" href="userprofile.php">Click here.</a>';
-    echo '</p>';
-    echo '</div>';
-}
-?>
 
   <div class="container bg-white mt-5 py-5">
-  <?php
-    if(!empty($action)) {
-        echo '<p class="alert alert-success col-lg-6">';
-        echo $action;
-        echo '</p>';
-    }
-  ?>
     <div class="row">
-        <?php foreach(getGadgetId($_GET['id']) as $g) { ?>
             <div class="col">
                 <form method="POST" action="" class="form-horizontal">
                     <div class="form-inline">
                         <h4>Gadget Information</h4>
-                        <input type="text" name="gad_id" value="<?php echo $g['g_id']?>" hidden>
-                        <input type="text" name="owner_id" value="<?php echo $g['owner_id']?>" hidden>
-                        <input type="text" name="user_id" value="<?php echo $_SESSION['id']?>" hidden>
-                        <button type="submit" name="addtocart" class="btn btn-success ml-auto mr-5"><i class="fas fa-cart-plus mr-2"></i> Add to cart</button>
+                        <!-- <input type="text" name="gad_id" value="" hidden>
+                        <input type="text" name="owner_id" value="" hidden>
+                        <input type="text" name="user_id" value="" hidden> -->
+                        <button class="btn btn-success ml-auto mr-5" name="btnAddToCart"><i class="fas fa-cart-plus mr-2"></i> Add to rentals</button>
                     </div>
                     <hr>
                     <div class="form-inline pl-5">
-                        <img src="../assets/images/<?php echo $g['g_pic'] ?>" alt="gadget image" width="150">
+                        <img src="../assets/images/<?php echo $g_pic;?>" alt="gadget image" width="150">
                         <p class="ml-5">
-                            Model: <b> <?php echo $g['g_model'] ?> </b> <br>
-                            Brand: <b> <?php echo $g['g_brand'] ?> </b> <Br>
-                            Description: <b> <?php echo $g['g_desc'] ?> </b> <br>
-                            Rental: <b> <?php echo $g['g_price'] ?>.00 </b>
+                            Model: <b> <?php echo $g_model;?> </b> <br>
+                            Brand: <b> <?php echo $g_brand;?> </b> <Br>
+                            Description: <b> <?php echo $g_desc;?> </b> <br>
+                            Rental: <b> <?php echo $g_price;?> </b> <br>
                         </p>
                     </div>
+                    <form action="" class="form-horizontal">
+                      <div class="form-group col-lg-3" style="margin-left: 21%;">
+                        <input type="number" class="form-control my-2" name="no_days" placeholder="# of days">
+                        <label for="">Start Date</label>
+                        <input type="date" class="form-control mb-2" name="start_date">
+                        <label for="">End Date</label>
+                        <input type="date" class="form-control" name="end_date" placeholder="end">
+                      </div>
+                    </form>
                     <div class="form-group mt-5">
                         <h4>More info</h4>
                         <hr>
+                        <div class="form-inline">
+                        <img class="round rounded-circle ml-3" src="../assets/images/<?php echo $pro_pic;?>" alt="" width="200">
                         <p class="pl-5">
-                            Owner name: <b> <?php echo $g['fname'] ?> <?php echo $g['lname'] ?> </b> <br>
-                            Contact No: <b> <?php echo $g['contactno'] ?> </b> <br>
-                            Address: <b> <?php echo $g['address'] ?> </b>
+                            Owner name: <b> <?php echo $fname, $lname;?> </b> <br>
+                            Contact No: <b> <?php echo $contactno;?> </b> <br>
+                            Address: <b> <?php echo $address;?> </b> <br>
+                            Email: <b> <?php echo $email;?> </b>
                         </p>
+                        </div>
                     </div>
                 </form>
             </div>
-        <?php } ?>
     </div>
   </div>
 
@@ -129,3 +122,26 @@ session_start();
 <script type="text/javascript" src="../assets/js/bootstrap.min.js.map"></script>
 </body>
 </html>
+
+<?php
+  
+  if (isset($_POST['btnAddToCart'])) {
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $start_date = $_POST['start_date'];
+    $no_days = $_POST['no_days'];
+    $tran_status = 'in cart';
+    
+    $price = $g_price * $no_days;
+//echo $gad_id, $owner_id, $id, $no_days, $start_date, $end_date, $tran_status;
+    require '../dbowner/db.php';
+    $sql2 = "INSERT INTO booking(gad_id,owner_id,user_id,no_days,start_date,end_date,rental_price,tran_status) VALUES($gad_id, $owner_id, $id, '$no_days', '$start_date', '$end_date','$price','$tran_status')";
+    $res2 = mysqli_query($con, $sql2);
+    if ($res) {
+      echo "<script>alert('Added to cart!');window.location='userdashboard.php'</script>";
+    }
+    else{
+      mysqli_error($con);
+    }
+  }
+?>
