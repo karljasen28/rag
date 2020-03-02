@@ -8,6 +8,7 @@ $sql = "SELECT * FROM gadgets join users on gadgets.owner_id = users.id WHERE g_
 $res = mysqli_query($con, $sql);
 while ($data = mysqli_fetch_assoc($res)) {
   $g_pic = $data['g_pic'];
+  $owner_id = $data['owner_id'];
   $g_model = $data['g_model'];
   $g_brand = $data['g_brand'];
   $g_serial = $data['g_serial'];
@@ -96,13 +97,24 @@ while ($data = mysqli_fetch_assoc($res)) {
                     <div class="form-group mt-5">
                         <h4>More info</h4>
                         <hr>
+                        <?php
+                          require '../dbowner/db.php';
+                          $sql2 = "SELECT AVG(rate) as avg FROM ratings WHERE owner_id=".$owner_id;
+                          $res2 = mysqli_query($con, $sql2);
+                          while ($data = mysqli_fetch_assoc($res2)){
+                            $avg = $data['avg'];
+                          }
+                        ?>
                         <div class="form-inline">
                         <img class="round rounded-circle ml-3" src="../assets/images/<?php echo $pro_pic;?>" alt="" width="200">
                         <p class="pl-5">
                             Owner name: <b> <?php echo $fname, $lname;?> </b> <br>
                             Contact No: <b> <?php echo $contactno;?> </b> <br>
                             Address: <b> <?php echo $address;?> </b> <br>
-                            Email: <b> <?php echo $email;?> </b>
+                            Email: <b> <?php echo $email;?> </b> <br>
+                            Rating: <b class="text-warning"><?php 
+                              echo number_format((float)$avg, 1, '.', '');
+                            ?></b>
                         </p>
                         </div>
                     </div>
