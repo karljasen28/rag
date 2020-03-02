@@ -82,7 +82,7 @@
             echo "<td>".$data['g_price']."</td>";
             echo "<td>".$data['tran_date']."</td>";
             echo "<td>".$data['tran_status']."</td>";
-            echo "<td><a href='cart.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>View</a> <a href='' class='btn btn-danger'>Cancel</a></td>";
+            echo "<td><a href='cart.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>View</a> <a href='process.php?tran_del=".$data['tran_id']."' class='btn btn-danger'>Cancel</a></td>";
           echo "</tr>";
         }
         ?>
@@ -110,7 +110,7 @@
         <?php 
         require '../dbowner/db.php';
         $sql = "SELECT * FROM booking JOIN users ON booking.owner_id = users.id join gadgets ON booking.gad_id = gadgets.g_id
-                WHERE booking.tran_status = 'pending'";
+                WHERE booking.tran_status = 'pending' OR booking.tran_status = 'approved' OR booking.tran_status = 'rejected'";
         $res = mysqli_query($con, $sql);
 
         while ($data = mysqli_fetch_assoc($res)) {
@@ -121,7 +121,15 @@
             echo "<td>".$data['g_brand']." ".$data['g_model']."</td>";
             echo "<td>".$total."</td>";
             echo "<td>".$data['tran_date']."</td>";
-            echo "<td>".$data['tran_status']."</td>";
+            if ($data['tran_status'] == 'approved') {
+              echo "<td><span class='text-success'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'rejected') {
+              echo "<td><span class='text-danger'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'pending') {
+              echo "<td><span class='text-primary'>".$data['tran_status']."</span></td>";
+            }
           echo "</tr>";
         }
         ?>

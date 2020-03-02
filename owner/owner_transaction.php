@@ -60,7 +60,9 @@
 
         session_start();
         require '../dbowner/db.php';
-        $sql = "SELECT * FROM booking JOIN users ON booking.user_id = users.id join gadgets ON booking.gad_id = gadgets.g_id";
+        $sql = "SELECT * FROM booking JOIN users ON booking.user_id = users.id 
+                join gadgets ON booking.gad_id = gadgets.g_id
+                WHERE booking.tran_status = 'approved' OR booking.tran_status = 'rejected' OR booking.tran_status = 'pending' OR booking.tran_status = 'finished'";
         $res = mysqli_query($con, $sql);
 
         while ($data = mysqli_fetch_assoc($res)) {
@@ -72,12 +74,26 @@
             echo "<td>".$data['no_days']."</td>";
             echo "<td>".$data['start_date']."</td>";
             echo "<td>".$data['end_date']."</td>";
-            echo "<td>".$data['tran_status']."</td>";
-            if ($data['tran_status'] == 'approved' || $data['tran_status'] == 'rejected') {
+            if ($data['tran_status'] == 'approved') {
+              echo "<td><span class='text-success'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'rejected') {
+              echo "<td><span class='text-danger'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'finished') {
+              echo "<td><span class='text-dark'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'pending') {
+              echo "<td><span class='text-primary'>".$data['tran_status']."</span></td>";
+            }
+            if ($data['tran_status'] == 'rejected') {
                 echo "<td>---</td>";
             }
-            else{
-                echo "<td><a href='process.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Approve</a> <a href='process.php?discard_id=".$data['tran_id']."' class='btn btn-danger'>Discard</a></td>";
+            if ($data['tran_status'] == 'approved') {
+              echo "<td><a href='process.php?success_id=".$data['tran_id']."' class='btn btn-primary'>Set as Complete</a></td>";
+            }
+            if ($data['tran_status'] == 'pending') {
+               echo "<td><a href='process.php?tran_id=".$data['tran_id']."' class='btn btn-primary'>Approve</a> <a href='process.php?discard_id=".$data['tran_id']."' class='btn btn-danger'>Discard</a></td>";
             }
             
           echo "</tr>";

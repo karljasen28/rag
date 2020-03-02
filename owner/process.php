@@ -29,6 +29,20 @@
             echo "<script>alert('Error!');window.location='devices.php'</script>";
         }
     }
+    if (isset($_GET['success_id'])) {
+        $tran_id = $_GET['success_id'];
+
+        require '../dbowner/db.php';
+        $sql = "UPDATE booking SET tran_status='finished' WHERE tran_id=".$tran_id;
+        $res = mysqli_query($con, $sql);
+
+        if ($res) {
+            echo "<script>alert('Transaction set as finished!');window.location='owner_transaction.php'</script>";
+        }
+        else{
+            echo "<script>alert('Error!');window.location='devices.php'</script>";
+        }
+    }
 
     if (isset($_GET['tran_id'])) {
         $tran_id = $_GET['tran_id'];
