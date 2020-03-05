@@ -92,7 +92,7 @@
                     </div>
                     <div class="col">
                         <label>Contact No.</label>
-                        <input class="form-control" type="text" name="contactno" placeholder="Phone Number" required="">
+                        <input class="form-control" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" name="contactno" id="contactno" placeholder="Phone Number" maxlength="11" size="11" required="">
                     </div>
                 </div>
                 <div class="row mt-3">

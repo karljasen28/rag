@@ -58,6 +58,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Status</th>
                 <th scope="col">Account</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,8 +83,25 @@
                         echo"<td>".$data['type']."</td>";
                         echo"<td>".$data['status']."</td>";
                         echo"<td>".$data['account']."</td>";
-                        echo"<td><a href='process.php?g_id=".$data['id']."' class='btn btn-danger'>Disable</a></td>";
-                echo"</tr>";
+                        if($data['status'] == "inactive"){
+                          echo"
+                          <td>
+                            <form method='POST' action='process.php'>
+                            <input type='text' name='user_id' value='".$data['id']."'>
+                            <button class='btn btn-primary' name='active'>Activate</button
+                            </form>
+                          </td>";
+                        }
+                        else{
+                          echo"
+                          <td>
+                            <form method='POST' action='process.php'>
+                            <input type='text' name='user_id' value='".$data['id']."'>
+                            <button class='btn btn-danger' name='deactive'>Deactivate</button
+                            </form>
+                          </td>";
+                        }
+                        echo"</tr>";
                 }
             ?>
             </tbody>
@@ -143,5 +161,12 @@
 <script type="text/javascript" src="../assets/js/bootstrap.js.map"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js.map"></script>
+<script>
+  var trap = document.getElementById("trap").value;
+  
+  if(trap === "active") {
+    document.getElementById("active").hidden = true;
+  }
+</script>
 </body>
 </html>
