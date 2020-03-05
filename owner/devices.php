@@ -82,10 +82,10 @@
                     echo"<td><span class='text-success'>".$data['g_status']."</span></td>";
                 }
                 if ($data['g_status'] == 'unavailable') {
-                    echo"<td><a href='' class='btn btn-success'>Edit</a> <a href='process.php?available_id=".$data['g_id']."' class='btn btn-primary'>Set as available</a></td>";
+                    echo"<td><a href='process.php?available_id=".$data['g_id']."' class='btn btn-primary'>Set as available</a></td>";
                 }
                 else {
-                    echo"<td><a href='' class='btn btn-success'>Edit</a> <a href='process.php?g_id=".$data['g_id']."' class='btn btn-danger'>Set as unavailable</a></td>";
+                    echo"<td><a href='editdevice.php?id=".$data['g_id']."' class='btn btn-success'>Edit</a> <a href='process.php?g_id=".$data['g_id']."' class='btn btn-danger'>Set as unavailable</a></td>";
                 }
            echo"</tr>";
         }
