@@ -75,7 +75,7 @@
         </div>
         <div class="form-group">
             <label>Phone No.</label>
-            <input class="form-control" type="text" name="contactno" placeholder="Contact Number" value="<?php echo $contactno;?>">
+            <input class="form-control" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" name="contactno" placeholder="Contact Number" value="<?php echo $contactno;?>" maxlength="11" size="11" required="">
         </div>
         <div class="form-group">
             <input class="btn btn-primary col-lg-3" type="submit" name="btnupdate" value="SAVE">

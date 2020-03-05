@@ -76,7 +76,7 @@ if(isset($_POST['update'])) {
         </div>
         <div class="form-group">
             <label>Phone No.</label>
-            <input class="form-control" type="text" name="contactno" placeholder="Contact Number" value="<?php echo $data['contactno']?>">
+            <input class="form-control" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" name="contactno" placeholder="Contact Number" value="<?php echo $data['contactno']?>" maxlength="11" size="11" required="">
         </div>
         <div class="form-group">
             <input class="btn btn-primary col-lg-3" type="submit" name="update" value="SAVE">
