@@ -1,27 +1,32 @@
 <?php
-    require('../dbowner/db.php');
+ if (isset($_GET['activate_id'])) {
+     $id = $_GET['activate_id'];
 
-if(isset($_POST['deactive'])) {
-    $user_id = $_POST['user_id'];
-    $sqld = "UPDATE users SET status = 'inactive' WHERE id=".$user_id;
-    $resultd = mysqli_query($con, $sqld);
+     require '../dbowner/db.php';
+     $sql = "UPDATE users SET status = 'active' WHERE id=".$id;
 
-    if($resultd) {
-        header("location: list.php");
-    } else {
-        mysqli_error($con);
-    }
-}
+     $res = mysqli_query($con, $sql);
 
-if(isset($_POST['active'])) {
-    $user_id = $_POST['user_id'];
-    $sqla = "UPDATE users SET status = 'active' WHERE id=".$user_id;
-    $resulta = mysqli_query($con, $sqla);
+     if ($res) {
+        echo "<script>alert('User activated!');window.location='list.php'</script>";
+     }
+     else{
+         mysqli_error($con);
+     }
+ }
+ if(isset($_GET['deactivate_id'])){
+    $id = $_GET['deactivate_id'];
 
-    if($resulta) {
-        header("location: list.php");
-    } else {
-        mysqli_error($con);
-    }
-}
+    require '../dbowner/db.php';
+     $sql = "UPDATE users SET status = 'inactive' WHERE id=".$id;
+
+     $res = mysqli_query($con, $sql);
+
+     if ($res) {
+        echo "<script>alert('User deactivated!');window.location='list.php'</script>";
+     }
+     else{
+         mysqli_error($con);
+     }
+ }
 ?>

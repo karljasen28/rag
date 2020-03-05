@@ -83,25 +83,12 @@
                         echo"<td>".$data['type']."</td>";
                         echo"<td>".$data['status']."</td>";
                         echo"<td>".$data['account']."</td>";
-                        if($data['status'] == "inactive"){
-                          echo"
-                          <td>
-                            <form method='POST' action='process.php'>
-                            <input type='text' name='user_id' value='".$data['id']."'>
-                            <button class='btn btn-primary' name='active'>Activate</button
-                            </form>
-                          </td>";
+                        if ($data['status'] == 'inactive') {
+                          echo"<td><a href='process.php?activate_id=".$data['id']."' class='btn btn-success'>Activate</a></td>";
+                        }else{
+                          echo"<td><a href='process.php?deactivate_id=".$data['id']."' class='btn btn-danger'>Deactivate</a></td>";
                         }
-                        else{
-                          echo"
-                          <td>
-                            <form method='POST' action='process.php'>
-                            <input type='text' name='user_id' value='".$data['id']."'>
-                            <button class='btn btn-danger' name='deactive'>Deactivate</button
-                            </form>
-                          </td>";
-                        }
-                        echo"</tr>";
+                echo"</tr>";
                 }
             ?>
             </tbody>
@@ -143,7 +130,11 @@
                         echo"<td>".$data['type']."</td>";
                         echo"<td>".$data['status']."</td>";
                         echo"<td>".$data['account']."</td>";
-                        echo"<td><a href='process.php?g_id=".$data['id']."' class='btn btn-danger'>Disable</a></td>";
+                        if ($data['status'] == 'inactive') {
+                          echo"<td><a href='process.php?activate_id=".$data['id']."' class='btn btn-success'>Activate</a></td>";
+                        }else{
+                          echo"<td><a href='process.php?deactivate_id=".$data['id']."' class='btn btn-danger'>Deactivate</a></td>";
+                        }
                 echo"</tr>";
                 }
             ?>
